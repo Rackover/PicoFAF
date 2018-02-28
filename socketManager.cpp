@@ -3,93 +3,98 @@
 #include "logManager.h"
 #include "settings.h"
 
-SocketManager::SocketManager(QObject *parent) :
-    QObject(parent)
-{
-}
 
-Utils utils;
-FD_CONFIG FDC;
-HC_CONFIG HCC;
+namespace SocketManager {
 
-QTcpSocket* SocketManager::InitalizeConnection()
-{
-    socket = new QTcpSocket(this);
-    socket->connectToHost(QString::fromStdString(FDC.SERVER_ADDRESS), (quint16)FDC.SERVER_PORT);
-    socket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+    LogManager::LogManager logs;
 
-    if(socket->waitForConnected(3000))
+    FD_CONFIG FDC;
+
+    SocketManager::SocketManager(QObject *parent) :
+        QObject(parent)
     {
-        Log::Write("INITIALIZE_CONNECTION => Connected!");
-
-        QJsonObject helloObject{
-            {"command", "ask_session"},
-            {"version", QString::fromStdString(HCC.CLIENT_VERSION)},
-            {"user_agent", "faf-client"}
-        };
-
-        QJsonDocument helloDocument(helloObject);
-        QString helloMessage = helloDocument.toJson();
-
-       Log::Write("INITIALIZE_CONNECTION => Sending  " + helloMessage.toStdString());
-
-       QDataStream socketStream{socket};
-       socketStream.setVersion(QDataStream::Qt_4_2);
-
-       socketStream << (quint32) helloMessage.size()*2 + 4 << helloMessage;
-
-       socket->flush();
-
+        socket = new QTcpSocket(this);
+        socket->connectToHost(QString::fromStdString(FDC.SERVER_ADDRESS), (quint16) FDC.SERVER_PORT);
+        socket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
     }
-    else
+
+
+
+    QTcpSocket* SocketManager::InitalizeConnection()
     {
-        Log::Write("INITIALIZE_CONNECTION => Not connected!");
+        if(socket->waitForConnected(3000))
+        {
+            logs.Write("INITIALIZE_CONNECTION => Connected!");
+
+            QJsonObject helloObject{
+                {"command", "ask_session"},
+                {"version", QString::fromStdString(HC_CONFIG.CLIENT_VERSION)},
+                {"user_agent", "faf-client"}
+            };
+
+            QJsonDocument helloDocument(helloObject);
+            QString helloMessage = helloDocument.toJson();
+
+           logs.Write("INITIALIZE_CONNECTION => Sending  " + helloMessage.toStdString());
+
+           QDataStream socketStream{socket};
+           socketStream.setVersion(QDataStream::Qt_4_2);
+
+           socketStream << (quint32) helloMessage.size()*2 + 4 << helloMessage;
+
+           socket->flush();
+
+        }
+        else
+        {
+            logs.Write("INITIALIZE_CONNECTION => Not connected!");
+        }
+        return socket;
     }
-    return socket;
-}
 
-bool SocketManager::IsConnected(QTcpSocket* socket){
-    return (socket->state() == QTcpSocket::ConnectedState);
-}
+    bool SocketManager::IsConnected(QTcpSocket* socket){
+        return (socket->state() == QTcpSocket::ConnectedState);
+    }
 
-QString SocketManager::ReceiveData(QTcpSocket* socket){
+    QString SocketManager::ReceiveData(QTcpSocket* socket){
 
-    QString msg;
+        QString msg;
 
-    while(socket->waitForReadyRead(1000)) {
-        if(socket->bytesAvailable() < 4) continue;
+        while(socket->waitForReadyRead(1000)) {
+            if(socket->bytesAvailable() < 4) continue;
+
+            QDataStream socketStream{socket};
+            socketStream.setVersion(QDataStream::Qt_4_2);
+
+            quint32 bs;
+            socketStream >> bs;
+
+            socketStream >> msg;
+
+            logs.Write("RECEIVE_DATA => Received message [" + msg.length() + std::string("]: ") + msg.toStdString());
+
+            return msg;
+
+        }
+
+        return msg;
+    }
+    void SocketManager::CloseConnection(QTcpSocket* socket){
+
+            socket->close();
+            logs.Write("CLOSE_CONNECTION => Closed socket");
+    }
+
+
+
+    void SocketManager::SendData(QTcpSocket* socket, QString data){
 
         QDataStream socketStream{socket};
         socketStream.setVersion(QDataStream::Qt_4_2);
 
-        quint32 bs;
-        socketStream >> bs;
+        socketStream << (quint32) data.size()*2 + 4 << data;
 
-        socketStream >> msg;
-
-        Log::Write("RECEIVE_DATA => Received message [" + msg.length() + std::string("]: ") + msg.toStdString());
-
-        return msg;
-
+        socket->flush();
+        logs.Write("SEND_DATA => Data sent");
     }
-
-    return msg;
-}
-void SocketManager::CloseConnection(QTcpSocket* socket){
-
-        socket->close();
-        Log::Write("CLOSE_CONNECTION => Closed socket");
-}
-
-
-
-void SocketManager::SendData(QTcpSocket* socket, QString data){
-
-    QDataStream socketStream{socket};
-    socketStream.setVersion(QDataStream::Qt_4_2);
-
-    socketStream << (quint32) data.size()*2 + 4 << data;
-
-    socket->flush();
-    Log::Write("SEND_DATA => Data sent");
 }

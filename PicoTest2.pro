@@ -1,6 +1,6 @@
 QT -= gui
 
-CONFIG += c++11 console
+CONFIG += c++1z console
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -23,7 +23,6 @@ SOURCES += main.cpp \
     authentificationManager.cpp
 
 HEADERS += \
-    main.h \
     responseManager.h \
     utils.h \
     socketManager.h \

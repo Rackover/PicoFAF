@@ -4,7 +4,9 @@
 #include <QString>
 #include <QProcess>
 #include <QDir>
+#include <QTextCodec>
 
-static QString GetUid(double sessionId);
-
+namespace AuthentificationManager{
+    static QString GetUid(double sessionId);
+}
 #endif // AUTHENTIFICATIONMANAGER_H

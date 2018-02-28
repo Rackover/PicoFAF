@@ -1,18 +1,13 @@
-#include "main.h"
-
+#include <QCoreApplication>
 #include "responseManager.h"
 #include "socketManager.h"
-
-#include "utils.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-
-    Utils utils;
-    SocketManager socketApp;
-    ResponseManager responseApp;
+    SocketManager::SocketManager socketApp;
+    ResponseManager::ResponseManager responseApp;
 
     QTcpSocket* currentSocket = socketApp.InitalizeConnection();
 

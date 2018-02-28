@@ -12,26 +12,26 @@
 #include <QFile>
 #include <QDataStream>
 
+#include "settings.h"
+
 namespace LogManager {
 
-class LogManager : public QObject
-{
-    Q_OBJECT
-public:
+    class LogManager : public QObject
+    {
+        Q_OBJECT
+    public:
 
-    explicit LogManager(QObject *parent = 0);
+        std::clock_t startClock;
+        explicit LogManager(QObject *parent = 0);
 
-signals:
+        void Write(std::string message);
 
-public slots:
+    signals:
 
-private:
+    public slots:
 
-};
+    private:
 
-static const LogManager logManager;
-
-static void Write(std::string data);
-
+    };
 }
 #endif // LOGMANAGER_H

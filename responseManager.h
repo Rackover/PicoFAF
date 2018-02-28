@@ -10,21 +10,23 @@
 #include <QDebug>
 #include <QTextCodec>
 
+namespace ResponseManager {
 
-class ResponseManager : public QObject
-{
-    Q_OBJECT
-public:
-    explicit ResponseManager(QObject *parent = 0);
+    class ResponseManager : public QObject
+    {
+        Q_OBJECT
+    public:
+        explicit ResponseManager(QObject *parent = 0);
 
-    QString MakeResponse(QString inputData);
+        QString MakeResponse(QString inputData);
 
-signals:
+    signals:
 
-public slots:
+    public slots:
 
-private:
+    private:
 
-};
+    };
+}
 
 #endif // RESPONSEMANAGER_H
