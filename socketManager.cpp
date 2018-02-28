@@ -13,7 +13,6 @@ namespace SocketManager {
     SocketManager::SocketManager(QObject *parent) :
         QObject(parent)
     {
-        QTcpSocket socket;
         socket.connectToHost(QString::fromStdString(FDC.SERVER_ADDRESS), (quint16) FDC.SERVER_PORT);
         socket.setSocketOption(QAbstractSocket::KeepAliveOption, 1);
 
@@ -53,7 +52,6 @@ namespace SocketManager {
 
         QString msg;
 
-
         while(socket.waitForReadyRead(1000)) {
             if(socket.bytesAvailable() < 4) continue;
 
@@ -68,7 +66,6 @@ namespace SocketManager {
 
             socketStream >> msg;
 
-            qDebug() << "received";
 
             logs.Write(QString("RECEIVE_DATA => Received message [") + msg.length() + QString("]: ") + msg);
 
