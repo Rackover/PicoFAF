@@ -19,13 +19,12 @@ namespace SocketManager {
     public:
         explicit SocketManager(QObject *parent = 0);
 
-        QTcpSocket* socket;
+        QTcpSocket socket;
 
-        QTcpSocket* InitalizeConnection();
-        bool IsConnected(QTcpSocket* socket);
-        QString ReceiveData(QTcpSocket* socket);
-        void CloseConnection(QTcpSocket* socket);
-        void SendData(QTcpSocket* socket, QString data);
+        bool IsConnected();
+        QString ReceiveData();
+        void CloseConnection();
+        void SendData(QString data);
 
     signals:
 

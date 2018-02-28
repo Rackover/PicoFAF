@@ -5,19 +5,20 @@
 
 static const struct HC_CONFIG{
     std::string CLIENT_VERSION = "0.13.2";
+    std::string LOGFILE = "PICOCLNT.LOG";
 } HC_CONFIG;
 
 
 struct FD_CONFIG{
-    std::string SERVER_ADDRESS = "test.faforever.com";
+    std::string SERVER_ADDRESS = "lobby.faforever.com";
     int SERVER_PORT = 8001;
     std::string LOGIN = "Rackover";
     std::string PASSWORD = "foo";
     std::string HASHWORD = "fooHash";
-    std::string LOGFILE = "LOGS/PICOCLNT.LOG";
+    std::string LOGPATH = "LOGS/";
 };
 
-
+/*
 /////////////////////
 ///
 ///  DEBUG ONLY - TO CHANGE
@@ -33,5 +34,6 @@ static const struct DEBUG_FD_CONFIG{
 ///
 /// END OF
 ///////////////////
+*/
 
 #endif // SETTINGS_H

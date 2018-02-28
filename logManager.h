@@ -1,8 +1,10 @@
 #ifndef LOGMANAGER_H
 #define LOGMANAGER_H
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <sstream>
+
 #include <QObject>
 #include <QDebug>
 #include <QTextCodec>
@@ -10,6 +12,8 @@
 #include <QProcess>
 #include <QDir>
 #include <QFile>
+#include <QFileInfo>
+#include <QDateTime>
 #include <QDataStream>
 
 #include "settings.h"
@@ -20,11 +24,10 @@ namespace LogManager {
     {
         Q_OBJECT
     public:
-
-        std::clock_t startClock;
         explicit LogManager(QObject *parent = 0);
 
-        void Write(std::string message);
+        void Write(QString inputData);
+        void InitializeLog();
 
     signals:
 

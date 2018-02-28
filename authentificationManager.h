@@ -7,6 +7,6 @@
 #include <QTextCodec>
 
 namespace AuthentificationManager{
-    static QString GetUid(double sessionId);
+    QString GetUid(double sessionId);
 }
 #endif // AUTHENTIFICATIONMANAGER_H

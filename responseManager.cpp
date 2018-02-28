@@ -5,15 +5,14 @@
 #include "logManager.h"
 #include "socketManager.h"
 #include "authentificationManager.h"
-
 namespace ResponseManager {
-
-    LogManager::LogManager logs;
-
     ResponseManager::ResponseManager(QObject *parent) :
         QObject(parent)
     {
     }
+
+    LogManager::LogManager logs;
+
 
     FD_CONFIG FDC;
     GameManager gameApp;
@@ -63,7 +62,7 @@ namespace ResponseManager {
 
         }
         if (response.length() > 0){
-           logs.Write("MAKE_RESPONSE => " + response.toStdString());
+           logs.Write(QString::fromStdString("MAKE_RESPONSE => ") + response);
         }
         return response;
     }
