@@ -1,10 +1,6 @@
 #ifndef GAMES_H
 #define GAMES_H
 
-#include <iostream>
-#include <map>
-
-#include <QCoreApplication>
 #include <QJsonObject>
 #include <QObject>
 

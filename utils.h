@@ -1,10 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <string>
-#include <vector>
 #include <sstream>
-#include <utility>
+#include <QCryptographicHash>
+#include <QString>
 
 namespace Pico{
     namespace Utils{
@@ -24,6 +23,20 @@ namespace Pico{
         constexpr unsigned int str2int(const char* str, int h = 0)
         {
             return !str[h] ? 5381 : (str2int(str, h+1) * 33) ^ str[h];
+        }
+
+        inline bool file_exists (const std::string& name) {
+            if (FILE *file = fopen(name.c_str(), "r")) {
+                fclose(file);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        inline QString sha256 (QString data){
+            data = QString("%1").arg(QString(QCryptographicHash::hash(data.toUtf8(),QCryptographicHash::Md5).toHex()));
+            return data;
         }
     }
 }

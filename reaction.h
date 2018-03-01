@@ -1,15 +1,8 @@
 #ifndef REACTION_H
 #define REACTION_H
 
-#include <iostream>
-
 #include <QObject>
-#include <QJsonDocument>
-#include <QJsonArray>
-#include <QJsonObject>
-#include <QDebug>
-#include <QTextCodec>
-
+#include <QString>
 
 namespace Pico{
     namespace Reaction{

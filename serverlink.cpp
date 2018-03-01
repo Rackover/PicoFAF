@@ -1,5 +1,11 @@
 #include "serverlink.h"
 
+#include "logging.h"
+#include "settings.h"
+
+#include <QDataStream>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 namespace Pico{
     namespace Server{
@@ -65,7 +71,7 @@ namespace Pico{
                 socketStream >> msg;
 
 
-                logging.Write(QString("RECEIVE_DATA => Received message [") + msg.length() + QString("]: ") + msg);
+                logging.Write(QString("RECEIVE_DATA => Received message [") + QString::number(msg.length()) + QString("]: ") + msg);
 
                 return msg;
 

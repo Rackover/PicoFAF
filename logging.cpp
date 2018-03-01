@@ -1,6 +1,14 @@
 #include "logging.h"
 #include "settings.h"
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <QDateTime>
+#include <QDir>
+#include <QObject>
+#include <QString>
+
 namespace Pico{
     namespace Logging{
 

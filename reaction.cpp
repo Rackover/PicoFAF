@@ -6,6 +6,10 @@
 #include "serverlink.h"
 #include "authentification.h"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QObject>
+
 namespace Pico{
     namespace Reaction{
         Funcs::Funcs(QObject *parent) :

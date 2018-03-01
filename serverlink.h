@@ -1,18 +1,8 @@
 #ifndef SOCKETTEST_H
 #define SOCKETTEST_H
 
-#include <iostream>
-
-#include <QObject>
+#include <QString>
 #include <QTcpSocket>
-#include <QDebug>
-#include <QTextCodec>
-#include <QDataStream>
-#include <QJsonObject>
-#include <QJsonDocument>
-
-#include "logging.h"
-#include "settings.h"
 
 namespace Pico{
     namespace Server{

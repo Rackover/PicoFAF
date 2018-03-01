@@ -1,8 +1,9 @@
-#include <QCoreApplication>
-
+#include "settings.h"
 #include "reaction.h"
 #include "serverlink.h"
 #include "logging.h"
+
+#include <QCoreApplication>
 
 int main(int argc, char *argv[])
 {
