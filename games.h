@@ -20,7 +20,7 @@ namespace Pico{
             public:
                 explicit Funcs(QObject *parent = 0);
 
-                std::map<int, GameInfo>* GameList;
+                std::map<int, GameInfo> GameList;
 
                 void UpdateGame(int id, GameInfo gameInfo);
                 GameInfo GetGame(int id);
