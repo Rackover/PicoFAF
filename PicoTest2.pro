@@ -15,21 +15,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += main.cpp \
-    responseManager.cpp \
-    utils.cpp \
-    socketManager.cpp \
-    gameManager.cpp \
-    logManager.cpp \
-    authentificationManager.cpp
+    authentification.cpp \
+    games.cpp \
+    logging.cpp \
+    reaction.cpp \
+    serverlink.cpp
 
 HEADERS += \
-    responseManager.h \
     utils.h \
-    socketManager.h \
-    gameManager.h \
     settings.h \
-    logManager.h \
-    authentificationManager.h
+    authentification.h \
+    games.h \
+    logging.h \
+    reaction.h \
+    serverlink.h
 
 #CUSTOM
 
@@ -37,4 +36,5 @@ QT += network
 QT += core
 
 DISTFILES += \
-    external/UIDGENRT.EXE
+    external/UIDGENRT.EXE \
+    CONFIG.TXT

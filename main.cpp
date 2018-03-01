@@ -1,28 +1,35 @@
 #include <QCoreApplication>
 
-#include "responseManager.h"
-#include "socketManager.h"
-#include "logManager.h"
+#include "reaction.h"
+#include "serverlink.h"
+#include "logging.h"
 
 int main(int argc, char *argv[])
 {
-    //Dont put anything above Log initialization
-    LogManager::LogManager logApp;
-    logApp.InitializeLog();    //Renames the old log file and moves if necessary
+    //Dont put anything here
+
+    //Log initialization
+    Pico::Logging::Funcs logging;
+    logging.InitializeLog();    //Renames the old log file and moves if necessary
+    //Endof
+
+    //Updating the settings, calculating password hash...
+
+    //Endof
 
 
     QCoreApplication a(argc, argv);
 
-    SocketManager::SocketManager socketApp;
-    ResponseManager::ResponseManager responseApp;
+    Pico::Server::Funcs server;
+    Pico::Reaction::Funcs reaction;
 
-    while (socketApp.IsConnected()){
-        QString data = socketApp.ReceiveData();
+    while (server.IsConnected()){
+        QString data = server.ReceiveData();
 
         if (data.length() > 0){
-            QString response = responseApp.MakeResponse(data);
+            QString response = reaction.MakeResponse(data);
             if (response.length() > 0){
-                socketApp.SendData(response);
+                server.SendData(response);
             }
         }
 

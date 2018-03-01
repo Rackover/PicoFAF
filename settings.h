@@ -3,20 +3,21 @@
 
 #include <QCryptographicHash>
 
-static const struct HC_CONFIG{
-    std::string CLIENT_VERSION = "0.13.2";
-    std::string LOGFILE = "PICOCLNT.LOG";
-} HC_CONFIG;
+namespace Pico{
+    static const struct HC_CONFIG{
+        std::string CLIENT_VERSION = "0.13.2";
+        std::string LOGFILE = "PICOCLNT.LOG";
+    } HC_CONFIG;
 
 
-struct FD_CONFIG{
-    std::string SERVER_ADDRESS = "lobby.faforever.com";
-    int SERVER_PORT = 8001;
-    std::string LOGIN = "Rackover";
-    std::string PASSWORD = "foo";
-    std::string HASHWORD = "fooHash";
-    std::string LOGPATH = "LOGS/";
-};
+    struct FD_CONFIG{
+        std::string SERVER_ADDRESS = "lobby.faforever.com";
+        int SERVER_PORT = 8001;
+        std::string LOGIN = "Rackover";
+        std::string PASSWORD = "foo";
+        std::string HASHWORD = "fooHash";
+        std::string LOGPATH = "LOGS/";
+    };
 
 /*
 /////////////////////
@@ -35,5 +36,5 @@ static const struct DEBUG_FD_CONFIG{
 /// END OF
 ///////////////////
 */
-
+}
 #endif // SETTINGS_H
