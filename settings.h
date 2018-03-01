@@ -2,6 +2,8 @@
 #define SETTINGS_H
 
 #include <QCryptographicHash>
+#include <QString>
+#include <QFile>
 #include <string>
 #include <fstream>
 #include <streambuf>
