@@ -15,7 +15,7 @@ namespace Pico{
         Pico::Logging::Funcs logging;
 
 
-        FD_CONFIG FDC;
+        Pico::Settings::FD_CONFIG FDC;
         Pico::Games::Funcs games;
 
         QString Funcs::MakeResponse(QString inputData){
@@ -33,10 +33,10 @@ namespace Pico{
 
             QString command = jsonObject.value("command").toString();
 
-            switch (str2int(command.toStdString().data())){
+            switch (Pico::Utils::str2int(command.toStdString().data())){
 
                 ///WILL TRY TO LOG IN AUTOMATICALLY
-                case str2int("session"):
+                case Pico::Utils::str2int("session"):
                     {
                         double sessionId =  jsonObject.value("session").toDouble();
                         QString sessionUid = Pico::Auth::GetUid(sessionId);
@@ -54,7 +54,7 @@ namespace Pico{
                     }
                 ////
 
-                case str2int("game_info"):
+                case Pico::Utils::str2int("game_info"):
                     {
                         qDebug() << jsonObject.value("state");
                         //GameManager.UpdateGame(jsonObject.value("uid"), jsonObject);

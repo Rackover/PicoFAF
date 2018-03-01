@@ -9,14 +9,14 @@ namespace Pico{
         {
         }
 
-        FD_CONFIG FDC;
+        Pico::Settings::FD_CONFIG FDC;
         std::clock_t startClock;
 
         void Funcs::Write(QString message){
             QDir logDirectory;
-            if (logDirectory.mkpath(QString::fromStdString(FDC.LOGPATH))){
+            if (logDirectory.mkpath(QString::fromStdString(FDC.LOG_PATH))){
 
-                QString completePath = QString::fromStdString(FDC.LOGPATH+HC_CONFIG.LOGFILE);
+                QString completePath = QString::fromStdString(FDC.LOG_PATH+Pico::Settings::HC_CONFIG.LOG_FILE);
 
                 std::ofstream logStream;
                 logStream.open(completePath.toStdString(), std::ofstream::out | std::ofstream::app);
@@ -39,7 +39,7 @@ namespace Pico{
         }
 
         void Funcs::InitializeLog(){
-            QString completePath = QString::fromStdString(FDC.LOGPATH+HC_CONFIG.LOGFILE);
+            QString completePath = QString::fromStdString(FDC.LOG_PATH+Pico::Settings::HC_CONFIG.LOG_FILE);
 
             QFile oldLog (completePath);
             if (oldLog.exists()){

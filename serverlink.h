@@ -11,6 +11,9 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
+#include "logging.h"
+#include "settings.h"
+
 namespace Pico{
     namespace Server{
 

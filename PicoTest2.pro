@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     games.cpp \
     logging.cpp \
     reaction.cpp \
-    serverlink.cpp
+    serverlink.cpp \
+    settings.cpp
 
 HEADERS += \
     utils.h \

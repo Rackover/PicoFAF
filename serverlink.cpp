@@ -1,15 +1,12 @@
 #include "serverlink.h"
 
-#include "logging.h"
-#include "settings.h"
-
 
 namespace Pico{
     namespace Server{
 
         Pico::Logging::Funcs logging;
 
-        FD_CONFIG FDC;
+        Pico::Settings::FD_CONFIG FDC;
 
         Funcs::Funcs(QObject *parent) :
             QObject(parent)
@@ -23,7 +20,7 @@ namespace Pico{
 
                 QJsonObject helloObject{
                     {"command", "ask_session"},
-                    {"version", QString::fromStdString(HC_CONFIG.CLIENT_VERSION)},
+                    {"version", QString::fromStdString(Pico::Settings::HC_CONFIG.CLIENT_VERSION)},
                     {"user_agent", "faf-client"}
                 };
 

@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     //Endof
 
     //Updating the settings, calculating password hash...
-
+    Pico::Settings::InitializeSettings();
     //Endof
 
 
