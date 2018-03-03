@@ -1,6 +1,8 @@
 #ifndef REACTION_H
 #define REACTION_H
 
+#include "serverlink.h"
+
 #include <QObject>
 #include <QString>
 #include <QJsonObject>
@@ -16,7 +18,7 @@ namespace Pico{
         public:
             explicit Funcs(QObject *parent = 0);
 
-            QString MakeResponse(QString inputData, std::map<int, QJsonObject> &gamesMap);
+            QString MakeResponse(QString inputData, std::map<int, QJsonObject> &gamesMap, Pico::Server::Funcs &server);
 
             signals:
 

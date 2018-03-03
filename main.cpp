@@ -48,16 +48,25 @@ int main(int argc, char *argv[])
         display.status = "connected";
 
         if (data.length() > 0){
-            QString response = reaction.MakeResponse(data, gamesMap);
+            QString response = reaction.MakeResponse(data, gamesMap, server);
 
-            display.ListGames(gamesMap);
-
-            if (response.length() > 0){
-
-                server.SendData(response);
+            if (server.IsConnected()){
+                display.ListGames(gamesMap);
+                if (response.length() > 0){
+                    server.SendData(response);
+                }
+            }
+            else{
+                display.status = "disconnected";
+                if (response.length() > 0){
+                    display.status += " - " + response.toStdString();
+                }
             }
         }
 
     };
+
+    display.Display();
+
     return a.exec();
 }

@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include <QJsonArray>
+#include <QJsonDocument>
 #include <QDebug>
 
 namespace Pico{
@@ -40,19 +41,22 @@ namespace Pico{
 
             int i = 0;
 
-            std::map<int, QJsonObject>
+            std::map<int, QJsonObject> fakeMap(gamesMap);
 
-            for (const auto& kv : gamesMap) {
+            for (const auto& kv : fakeMap) {
                 i++;
 
-                QJsonObject data = kv.second;
+                QJsonObject data;
+                if (i > 0){
+                    data = kv.second;
+                }
                 std::ostringstream gameLineStream;
 
                 gameLineStream
                         << std::internal << QString::number(i).toStdString() << "."
                          << " " << data.value("password_protected").toString().toStdString()
                          << " " << data.value("title").toString().toStdString()
-                         << " " << QString::number(data.value("_players").toArray().count()).toStdString() << "/" << QString::number(data.value("max_players").toInt()).toStdString()
+                         << " " << QString::number(data.value("num_players").toInt()).toStdString() << "/" << QString::number(data.value("max_players").toInt()).toStdString()
                          << " " << data.value("mapname").toString().toStdString()
                             ;
 

@@ -59,29 +59,3 @@ namespace Pico{
         }
     }
 }
-
-    /*
-    void LogToFile(QtMsgType type, const char *msg) {
-
-
-      QString datetime = QDateTime::currentDateTime().toStdString("yyyy.MM.dd hh:mm:ss");
-      switch (type) {
-        case QtDebugMsg:
-          logStream << datetime.toStdString().data() << " [Debug] " << msg << "\n";
-          break;
-        case QtCriticalMsg:
-          logStream << datetime.toStdString().data() << " [Critical] " << msg << "\n";
-          break;
-        case QtWarningMsg:
-          logStream << datetime.toStdString().data() << " [Warning] " << msg << "\n";
-          break;
-        case QtFatalMsg:
-          logStream << datetime.toStdString().data() <<  " [Fatal] " << msg << "\n";
-          abort();
-      }
-
-
-    }
-
-    qInstallMessageHandler(LogToFile);
-    */

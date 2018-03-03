@@ -21,16 +21,17 @@ namespace Pico{
         Pico::Settings::FD_CONFIG FDC;
 
 
-        //////
+        ////
         /// \brief Funcs::MakeResponse
         /// \param inputData
         /// \param gamesMap
         /// \return
-        ////
+        ///
 
         QString Funcs::MakeResponse(
                 QString inputData,
-                std::map<int, QJsonObject> &gamesMap
+                std::map<int, QJsonObject> &gamesMap,
+                Pico::Server::Funcs &server
                 ){
 
             if (inputData == "PING"){
@@ -76,6 +77,19 @@ namespace Pico{
 
                             gamesMap[key] = jsonObject;
                         }
+                        if (state == "closed"){
+                            int key = jsonObject.value("uid").toInt();
+                            gamesMap.erase(key);
+                        }
+                        break;
+                    }
+
+                case Pico::Utils::str2int("authentication_failed"):
+                    {
+                        std::string errorMsg = jsonObject.value("text").toString().toStdString();
+                        server.CloseConnection();
+                        logging.Write(QString::fromStdString("MAKE_RESPONSE => CLOSED CONNECTION WITH ERROR MESSAGE : " + errorMsg));
+                        return QString::fromStdString(errorMsg);
                         break;
                     }
 
