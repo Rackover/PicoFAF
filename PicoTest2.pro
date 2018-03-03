@@ -39,5 +39,10 @@ QT += network
 QT += core
 
 DISTFILES += \
-    external/UIDGENRT.EXE \
+    EXTERNAL/UIDGENRT.EXE \
     CONFIG.TXT
+
+OBJECTS_DIR = BUILD/.obj
+MOC_DIR = BUILD/.moc
+RCC_DIR = BUILD/.rcc
+DESTDIR = BIN

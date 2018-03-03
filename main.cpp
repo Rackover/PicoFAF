@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
     Pico::Reaction::Funcs reaction;
 
     display.status = "connecting...";
+    display.Display();
 
     while (server.IsConnected()){
         QString data = server.ReceiveData();
@@ -49,7 +50,6 @@ int main(int argc, char *argv[])
         if (data.length() > 0){
             QString response = reaction.MakeResponse(data, gamesMap);
 
-            qDebug() << gamesMap.size();
             display.ListGames(gamesMap);
 
             if (response.length() > 0){

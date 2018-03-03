@@ -20,9 +20,7 @@ namespace Pico{
 
         void Funcs::AddLine(std::string text){
 
-            //qDebug() << "Adding line" << QString::number(lines.size());
             lines.insert(lines.end(), text);
-            //qDebug() << QString::number(lines.size());
         }
 
         void Funcs::Display(){
@@ -42,7 +40,7 @@ namespace Pico{
 
             int i = 0;
 
-            qDebug() << gamesMap.size();
+            std::map<int, QJsonObject>
 
             for (const auto& kv : gamesMap) {
                 i++;
@@ -50,20 +48,19 @@ namespace Pico{
                 QJsonObject data = kv.second;
                 std::ostringstream gameLineStream;
 
-                std::cout
-                        << std::internal << std::setw(2) << data.value(QString::number(i)).toString().toStdString()
-                        << std::setw(1) << data.value("password").toString().toStdString()
-                        << std::setw(10) << data.value("name").toString().toStdString()
-                        << std::setw(5) << QString::number(data.value("_players").toArray().count()).toStdString() << "/" << QString::number(data.value("max_players").toInt()).toStdString()
-                        << std::setw(10) << data.value("map_file_path ").toString().toStdString()
-                        << std::endl;
+                gameLineStream
+                        << std::internal << QString::number(i).toStdString() << "."
+                         << " " << data.value("password_protected").toString().toStdString()
+                         << " " << data.value("title").toString().toStdString()
+                         << " " << QString::number(data.value("_players").toArray().count()).toStdString() << "/" << QString::number(data.value("max_players").toInt()).toStdString()
+                         << " " << data.value("mapname").toString().toStdString()
+                            ;
 
-                gameLineStream << QString::number(i).toStdString();
                 std::string gameLine(gameLineStream.str());
                 AddLine(gameLine);
             }
 
-            //Display();
+            Display();
         }
     }
 }
