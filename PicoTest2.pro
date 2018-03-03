@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     logging.cpp \
     reaction.cpp \
     serverlink.cpp \
-    settings.cpp
+    settings.cpp \
+    display.cpp
 
 HEADERS += \
     utils.h \
@@ -29,7 +30,8 @@ HEADERS += \
     games.h \
     logging.h \
     reaction.h \
-    serverlink.h
+    serverlink.h \
+    display.h
 
 #CUSTOM
 

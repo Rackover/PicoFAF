@@ -1,6 +1,6 @@
 SERVER_ADDRESS:lobby.faforever.com
 SERVER_PORT:8001
-LOGIN:Rackover
+LOGIN:Player
 PASSWORD:foo
 HASHWORD:
 LOG_PATH:LOGS/

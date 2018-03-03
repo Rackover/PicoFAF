@@ -22,7 +22,7 @@ namespace Pico{
 
             if(socket.waitForConnected(3000))
             {
-                logging.Write("INITIALIZE_CONNECTION => Connected!");
+                logging.Write("INITIALIZE_CONNECTION => Connected to "+QString::fromStdString(FDC.SERVER_ADDRESS)+"!");
 
                 QJsonObject helloObject{
                     {"command", "ask_session"},
@@ -70,8 +70,9 @@ namespace Pico{
 
                 socketStream >> msg;
 
-
-                logging.Write(QString("RECEIVE_DATA => Received message [") + QString::number(msg.length()) + QString("]: ") + msg);
+                if (msg.length() > 0){
+                    logging.Write(QString("RECEIVE_DATA => Received message [") + QString::number(msg.length()) + QString("]: ") + msg);
+                }
 
                 return msg;
 

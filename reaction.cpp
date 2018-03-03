@@ -17,12 +17,21 @@ namespace Pico{
         {}
 
         Pico::Logging::Funcs logging;
-
-
-        Pico::Settings::FD_CONFIG FDC;
         Pico::Games::Funcs games;
+        Pico::Settings::FD_CONFIG FDC;
 
-        QString Funcs::MakeResponse(QString inputData){
+
+        //////
+        /// \brief Funcs::MakeResponse
+        /// \param inputData
+        /// \param gamesMap
+        /// \return
+        ////
+
+        QString Funcs::MakeResponse(
+                QString inputData,
+                std::map<int, QJsonObject> &gamesMap
+                ){
 
             if (inputData == "PING"){
                 logging.Write("MAKE_RESPONSE => Pong-ing back.");
@@ -60,8 +69,13 @@ namespace Pico{
 
                 case Pico::Utils::str2int("game_info"):
                     {
-                        qDebug() << jsonObject.value("state");
-                        //GameManager.UpdateGame(jsonObject.value("uid"), jsonObject);
+                        QString state = jsonObject.value("state").toString();
+
+                        if (state == "open"){
+                            int key = jsonObject.value("uid").toInt();
+
+                            gamesMap[key] = jsonObject;
+                        }
                         break;
                     }
 

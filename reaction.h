@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include <QString>
+#include <QJsonObject>
+
+#include <map>
 
 namespace Pico{
     namespace Reaction{
@@ -13,7 +16,7 @@ namespace Pico{
         public:
             explicit Funcs(QObject *parent = 0);
 
-            QString MakeResponse(QString inputData);
+            QString MakeResponse(QString inputData, std::map<int, QJsonObject> &gamesMap);
 
             signals:
 
