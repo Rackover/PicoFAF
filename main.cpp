@@ -4,6 +4,8 @@
 #include "logging.h"
 #include "display.h"
 
+#include <iostream>
+
 #include <QCoreApplication>
 
 ///////////////
@@ -12,7 +14,10 @@
 ///
 ///////////////
 
+const float refreshSpeed = 1; /// One second.
+
 std::map<int, QJsonObject> gamesMap;
+float lastRefresh = 0;
 
 
 ///////////////
@@ -43,18 +48,50 @@ int main(int argc, char *argv[])
     display.status = "connecting...";
     display.Display();
 
-    while (server.IsConnected()){
-        QString data = server.ReceiveData();
+    if (server.IsConnected()){
         display.status = "connected";
+        display.Display();
+    }
 
+    while (server.IsConnected()){
+
+        QString data = server.ReceiveData();
+
+        ///Only waking up if the server responded with something else than an empty packet!
         if (data.length() > 0){
+
+            /// Calling MakeResponse to :
+            /// - Log in
+            /// - Disconnect
+            /// - Update games list
+
             QString response = reaction.MakeResponse(data, gamesMap, server);
 
+            /// Checking if we're still connected...at this point, MakeResponse could have disconnected us.
             if (server.IsConnected()){
-                display.ListGames(gamesMap);
-                if (response.length() > 0){
-                    server.SendData(response);
+
+                ///
+                /// GAME LISTING
+                ///
+
+                float currentTime = ((float)std::clock())/CLOCKS_PER_SEC;
+
+                if  (currentTime - lastRefresh > refreshSpeed){
+                    display.ListGames(gamesMap);
+                    lastRefresh = currentTime;
                 }
+
+                /// END OF
+
+
+                /// Actually answering the server
+                if (response.length() > 0){
+
+                    server.SendData(response);
+
+                }
+                /// End of
+
             }
             else{
                 display.status = "disconnected";
@@ -66,7 +103,7 @@ int main(int argc, char *argv[])
 
     };
 
-    display.Display();
+    //display.Display();
 
     return a.exec();
 }

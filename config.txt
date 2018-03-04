@@ -1,6 +1,6 @@
-SERVER_ADDRESS:lobby.faforever.com
+SERVER_ADDRESS:test.faforever.com
 SERVER_PORT:8001
 LOGIN:Player
 PASSWORD:foo
 HASHWORD:
-LOG_PATH:LOGS/
+LOG_PATH:logs/

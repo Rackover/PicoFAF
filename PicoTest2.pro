@@ -38,11 +38,13 @@ HEADERS += \
 QT += network
 QT += core
 
-DISTFILES += \
-    EXTERNAL/UIDGENRT.EXE \
-    CONFIG.TXT
+OTHER_FILES +=
 
 OBJECTS_DIR = BUILD/.obj
 MOC_DIR = BUILD/.moc
 RCC_DIR = BUILD/.rcc
 DESTDIR = BIN
+
+DISTFILES += \
+    external/uid-generator.exe \
+    config.txt

@@ -19,12 +19,12 @@ namespace Pico{
          std::string   FD_CONFIG::LOGIN =            "Player";
          std::string   FD_CONFIG::PASSWORD =         "foo";
          std::string   FD_CONFIG::HASHWORD =         "";
-         std::string   FD_CONFIG::LOG_PATH =         "LOGS/";
+         std::string   FD_CONFIG::LOG_PATH =         "logs/";
 
 
         void InitializeSettings(){
 
-            logging.Write("From INITIALIZE_CONFIG => Starting config initialization.");
+            logging.Write("INITIALIZE_CONFIG => Starting config initialization.");
 
             std::ostringstream newSettingsStream;
 
@@ -104,12 +104,12 @@ namespace Pico{
                     }
                 }
                 if (readData){
-                    logging.Write("From INITIALIZE_CONFIG => SET "+QString::fromStdString(settingName)+" TO ["+QString::fromStdString(settingValue)+"]");
+                    logging.Write("INITIALIZE_CONFIG => SET "+QString::fromStdString(settingName)+" TO ["+QString::fromStdString(settingValue)+"]");
                     newSettingsStream << settingName << ":" << settingValue << std::endl;
                 }
             }
             std::string newSettings(newSettingsStream.str());
-            logging.Write("From INITIALIZE_CONFIG => Finished config initialization.");
+            logging.Write("INITIALIZE_CONFIG => Finished config initialization.");
 
             QFile oldSettingsFile(QString::fromStdString(configPath));
             oldSettingsFile.remove();

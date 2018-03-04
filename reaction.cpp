@@ -53,7 +53,14 @@ namespace Pico{
                 case Pico::Utils::str2int("session"):
                     {
                         double sessionId =  jsonObject.value("session").toDouble();
+                        logging.Write("MAKE_RESPONSE => Generating UID...");
                         QString sessionUid = Pico::Auth::GetUid(sessionId);
+
+                        if (sessionUid == "-1"){
+                            server.CloseConnection();
+                            logging.Write(QString::fromStdString("MAKE_RESPONSE => COULD NOT GENERATE UID. CLOSING CONNETION."));
+                            return "Could not generate UID.";
+                        }
 
                         QJsonObject responseObject{
                             {"command", "hello"},
@@ -74,10 +81,9 @@ namespace Pico{
 
                         if (state == "open"){
                             int key = jsonObject.value("uid").toInt();
-
                             gamesMap[key] = jsonObject;
                         }
-                        if (state == "closed"){
+                        if (state == "closed" || state == "playing"){
                             int key = jsonObject.value("uid").toInt();
                             gamesMap.erase(key);
                         }
