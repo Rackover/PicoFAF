@@ -77,11 +77,14 @@ int main(int argc, char *argv[])
                 float currentTime = ((float)std::clock())/CLOCKS_PER_SEC;
 
                 if  (currentTime - lastRefresh > refreshSpeed){
-                    display.ListGames(gamesMap);
+                    display.DisplayGameList(gamesMap);
                     lastRefresh = currentTime;
                 }
 
                 /// END OF
+
+
+
 
 
                 /// Actually answering the server
@@ -103,7 +106,7 @@ int main(int argc, char *argv[])
 
     };
 
-    //display.Display();
+    display.Display();
 
     return a.exec();
 }

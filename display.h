@@ -1,6 +1,9 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
+#include <wincon/pdcwin.h>
+#include <panel.h>
+
 #include <QObject>
 
 namespace Pico{
@@ -10,6 +13,11 @@ namespace Pico{
         {
             Q_OBJECT
             public:
+
+                WINDOW *windows[4];
+                PANEL  *panels[4];
+
+
                 explicit Funcs(QObject *parent = 0);
 
                 std::list<std::string> lines;
@@ -17,7 +25,7 @@ namespace Pico{
 
                 void AddLine(std::string text);
                 void Display();
-                void ListGames(std::map<int, QJsonObject> &gamesMap);
+                void DisplayGameList(std::map<int, QJsonObject> &gamesMap);
 
         signals:
 

@@ -10,6 +10,7 @@ namespace Pico{
             std::string LOG_FILE =          "pico-client.log";
             std::string SETTINGS_FILE =     "config.txt";
             std::string UID_EXE_PATH =      "external/uid-generator.exe";
+            std::string CLIENT_NAME =       "Pico Client";
         } HC_CONFIG;
 
 

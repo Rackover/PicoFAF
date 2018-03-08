@@ -35,6 +35,13 @@ HEADERS += \
 
 #CUSTOM
 
+
+#PDC
+INCLUDEPATH += C:\Qt\custom-libs\pdcurses
+LIBS += -L"C:\Qt\custom-libs\pdcurses\wincon\build" -lpdcurses
+#ENDOf
+
+
 QT += network
 QT += core
 

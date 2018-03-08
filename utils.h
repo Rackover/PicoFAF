@@ -1,6 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <iostream>
 #include <sstream>
 #include <QCryptographicHash>
 #include <QString>
@@ -37,6 +38,14 @@ namespace Pico{
         inline QString sha256 (QString data){
             data = QString("%1").arg(QString(QCryptographicHash::hash(data.toUtf8(),QCryptographicHash::Md5).toHex()));
             return data;
+        }
+
+        inline std::string makeLong (std::string text, int length){
+            text = text.substr(0, length);
+            for (int i = text.size(); i < length; i++){
+                text += " ";
+            }
+            return text;
         }
     }
 }
