@@ -34,36 +34,11 @@ namespace Pico{
 
             init_pair(1, COLOR_BLACK, COLOR_WHITE); /// 1: STATUS window
 
-            ///
-            /// MAIN WINDOW
-            /// (displays game list, etc...)
-            ///
+            for (int i =0; i < 4; i++){
+                windows[i] = newwin(0,0,0,0);
+            }
 
-            windows[0] = newwin(LINES-2, COLS, 0, 0); /// As big as the terminal
-
-            ///
-            /// COMMAND WINDOW
-            /// (the scanF place where you can ask instructions)
-            ///
-
-            windows[1] = newwin(3, COLS, LINES - 4, 0); /// Online 1 text line, but 3 real lines : so it can be boxed.
-
-            ///
-            /// STATUS WINDOW
-            /// (the scanF place where you can ask instructions)
-            ///
-
-            windows[2] = newwin(1, COLS, LINES -1, 0);
-            wbkgdset(windows[2], COLOR_PAIR(1));
-
-            ///
-            /// DOWNLOAD WINDOW
-            /// (Big thing; centered)
-            ///
-
-            int dwWidth = 40;
-            int dwHeight = 30;
-            windows[3] = newwin(dwHeight, dwWidth, LINES/2-dwHeight/2, COLS/2-dwWidth/2);
+            ResizeWindows();
 
             ///
             /// PANELS
@@ -74,14 +49,60 @@ namespace Pico{
             }
         }
 
+        void Funcs::ResizeWindows(){
+
+            resize_term(0,0);
+
+            ///
+            /// MAIN WINDOW
+            /// (displays game list, etc...)
+            ///
+
+            windows[0] = resize_window(windows[0],LINES-2, COLS); /// As big as the terminal
+            mvwin(windows[0], 0,0);
+
+            ///
+            /// COMMAND WINDOW
+            /// (the scanF place where you can ask instructions)
+            ///
+
+            windows[1] = resize_window(windows[1], 3, COLS); /// Online 1 text line, but 3 real lines : so it can be boxed.
+            mvwin(windows[1], LINES - 4, 0);
+
+            ///
+            /// STATUS WINDOW
+            /// (the scanF place where you can ask instructions)
+            ///
+
+            windows[2] = resize_window(windows[2], 1, COLS);
+            wbkgdset(windows[2], COLOR_PAIR(1));
+            mvwin(windows[2], LINES -1, 0);
+
+            ///
+            /// DOWNLOAD WINDOW
+            /// (Big thing; centered)
+            ///
+
+            int dwWidth = 40;
+            int dwHeight = 30;
+            windows[3] = resize_window(windows[3], dwHeight, dwWidth);
+            mvwin(windows[3], LINES/2-dwHeight/2, COLS/2-dwWidth/2);
+        }
 
         void Funcs::AddLine(std::string text){
 
             lines.insert(lines.end(), text);
         }
 
-        void Funcs::Display(){
+        std::string Funcs::BoolToCheckbox(bool value){
+            if (value){
+                return "X";
+            }
+            return " ";
+        }
 
+        void Funcs::Display(){
+            ResizeWindows();
             clear();
 
             /// MAIN WINDOW
@@ -97,6 +118,7 @@ namespace Pico{
             /// COMMAND ZONE
             wclear(windows[1]);
             box(windows[1], 0, 0);
+            mvwprintw(windows[1], 1, 1, std::string(command).c_str());
 
             /// STATUS
             wclear(windows[2]);
@@ -112,6 +134,14 @@ namespace Pico{
             doupdate();
         }
 
+        void Funcs::RefreshCommand(std::string command){
+            /// COMMAND ZONE
+            wclear(windows[1]);
+            box(windows[1], 0, 0);
+            mvwprintw(windows[1], 1, 1, command.c_str());
+            wrefresh(windows[1]);
+        }
+
         void Funcs::DisplayGameList(std::map<int, QJsonObject>& gamesMap){
 
             int i = 0;
@@ -123,6 +153,7 @@ namespace Pico{
             int mapLength = 24;
             int authorLength = 16;
             int modLength = 16;
+            int passLength = 5;
 
             std::string separator = " | ";
             int totalLength =
@@ -131,10 +162,11 @@ namespace Pico{
                     +mapLength
                     +authorLength
                     +modLength
-                    + 5*separator.length();   //// Multiplying by the number of infos to display
+                    +passLength
+                    + 6*separator.length();   //// Multiplying by the number of infos to display
 
             std::string horizontalLine;
-            for (int i = 0; i < totalLength; i++){
+            for (int j = 0; j < totalLength; j++){
                 horizontalLine += "=";
             }
 
@@ -146,7 +178,8 @@ namespace Pico{
                      << separator << Pico::Utils::makeLong("PLAYERS", playersLength)
                      << separator << Pico::Utils::makeLong("MAP", mapLength)
                      << separator << Pico::Utils::makeLong("HOST", authorLength)
-                     << separator << Pico::Utils::makeLong("MOD", modLength);
+                     << separator << Pico::Utils::makeLong("MOD", modLength)
+                     << separator << Pico::Utils::makeLong("PASS", passLength);
 
             AddLine(headerStream.str());
             AddLine(horizontalLine);
@@ -155,9 +188,7 @@ namespace Pico{
                 i++;
 
                 QJsonObject data;
-                if (i > 0){
-                    data = kv.second;
-                }
+                data = kv.second;
                 std::ostringstream gameLineStream;
 
                 std::string gameId = QString::number(i).toStdString();
@@ -166,15 +197,18 @@ namespace Pico{
                 std::string gameMap = data.value("mapname").toString().toStdString();
                 std::string gameAuthor = data.value("host").toString().toStdString();
                 std::string gameMod = data.value("featured_mod").toString().toStdString();
+                std::string gamePass = BoolToCheckbox(data.value("password_protected").toBool());
+                //std::string gameMod = std::to_string(LINES);
 
                 gameLineStream
                         << std::internal
-                         << Pico::Utils::makeLong(gameId+".", 3)
+                         << Pico::Utils::makeLong(gameId, 3)
                          << separator << Pico::Utils::makeLong(gameName, nameLength)
                          << separator << Pico::Utils::makeLong(gamePlayers, playersLength)
                          << separator << Pico::Utils::makeLong(gameMap, mapLength)
                          << separator << Pico::Utils::makeLong(gameAuthor, authorLength)
                          << separator << Pico::Utils::makeLong(gameMod, modLength)
+                         << separator << Pico::Utils::makeLong(gamePass, passLength)
                             ;
 
                 std::string gameLine(gameLineStream.str());
@@ -186,6 +220,10 @@ namespace Pico{
             }
 
             Display();
+        }
+
+        void Funcs::DisplayDownloads(std::map<std::string, int> &downloadsMap){
+
         }
     }
 }

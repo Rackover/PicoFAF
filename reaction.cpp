@@ -83,7 +83,7 @@ namespace Pico{
                             int key = jsonObject.value("uid").toInt();
                             gamesMap[key] = jsonObject;
                         }
-                        if (state == "closed" || state == "playing"){
+                        else{
                             int key = jsonObject.value("uid").toInt();
                             gamesMap.erase(key);
                         }

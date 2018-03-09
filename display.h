@@ -22,10 +22,16 @@ namespace Pico{
 
                 std::list<std::string> lines;
                 std::string status;
+                std::string command;
 
                 void AddLine(std::string text);
+
+                void ResizeWindows();
+                std::string BoolToCheckbox(bool value);
                 void Display();
+                void RefreshCommand(std::string command);
                 void DisplayGameList(std::map<int, QJsonObject> &gamesMap);
+                void DisplayDownloads(std::map<std::string, int> &downloadsMap);
 
         signals:
 

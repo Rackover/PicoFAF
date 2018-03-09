@@ -21,7 +21,9 @@ SOURCES += main.cpp \
     reaction.cpp \
     serverlink.cpp \
     settings.cpp \
-    display.cpp
+    display.cpp \
+    input.cpp \
+    downloader.cpp
 
 HEADERS += \
     utils.h \
@@ -31,7 +33,9 @@ HEADERS += \
     logging.h \
     reaction.h \
     serverlink.h \
-    display.h
+    display.h \
+    input.h \
+    downloader.h
 
 #CUSTOM
 

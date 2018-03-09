@@ -1,8 +1,4 @@
 #include "games.h"
-#include "display.h"
-
-#include <QJsonArray>
-#include <QDebug>
 
 namespace Pico{
     namespace Games{
@@ -10,6 +6,10 @@ namespace Pico{
         Funcs::Funcs(QObject* parent) :
             QObject(parent)
         {
+        }
+
+        void Funcs::PopulateDownloadsMap(QJsonObject game, std::map<std::string, int> downloadsMap){
+
         }
     }
 }
