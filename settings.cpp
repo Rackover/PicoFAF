@@ -20,6 +20,8 @@ namespace Pico{
          std::string   FD_CONFIG::PASSWORD =         "foo";
          std::string   FD_CONFIG::HASHWORD =         "";
          std::string   FD_CONFIG::LOG_PATH =         "logs/";
+         std::string   FD_CONFIG::GAME_PATH =        "X:/GAMES/SCFA/Supreme Commander - Forged Alliance";
+         std::string   FD_CONFIG::FAF_PATH =         "X:/GAMES/SCFA/FAForever";
 
 
         void InitializeSettings(){

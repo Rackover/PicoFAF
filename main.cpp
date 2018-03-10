@@ -105,6 +105,10 @@ int main(int argc, char *argv[])
                     break;
 
                 case 1:{
+                        ///
+                        /// GAME PICKING
+                        ///
+
                         wmove(display.windows[1], 1, 1+display.command.size());
                         gamePick = input.PickGame(gamesMap, display.windows[1]);
                         if (gamePick > 0){
@@ -119,9 +123,15 @@ int main(int argc, char *argv[])
                     }
 
                 case 2:{
+                        ///
+                        /// GAME JOINING
+                        ///
+
                         if (gamePick <= 0){
                             mode = 0;
                         }
+                        logging.Write("MAIN=>Preparing to join "+QString::number(gamePick));
+
                         games.PopulateDownloadsMap(gamesMap[gamePick], downloadsMap);   /// Which files do we need to download for this game ?
                         downloader.DownloadFiles(downloadsMap);                         /// Updates downloadsMap state, download files one by one
                         float currentTime = ((float)std::clock())/CLOCKS_PER_SEC;

@@ -3,6 +3,7 @@
 
 #include <QJsonObject>
 #include <QObject>
+#include <QNetworkReply>
 
 namespace Pico{
     namespace Games{
@@ -14,6 +15,7 @@ namespace Pico{
                 explicit Funcs(QObject *parent = 0);
                 void PopulateDownloadsMap(QJsonObject game, std::map<std::string, int> downloadsMap);
         signals:
+            void onVaultResponse(QNetworkReply*);
 
         public slots:
 

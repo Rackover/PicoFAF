@@ -4,3 +4,5 @@ LOGIN:Player
 PASSWORD:foo
 HASHWORD:
 LOG_PATH:logs/
+GAME_PATH:X:\GAMES\SCFA\Supreme Commander - Forged Alliance
+FAF_PATH:X:\GAMES\SCFA\FAForever

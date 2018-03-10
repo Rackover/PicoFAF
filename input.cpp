@@ -1,4 +1,5 @@
 #include "input.h"
+#include "logging.h"
 
 #include <QJsonObject>
 
@@ -7,6 +8,8 @@
 
 namespace Pico{
     namespace Input{
+
+        Pico::Logging::Funcs logging;
 
         Funcs::Funcs(QObject* parent) :
             QObject(parent)
@@ -17,6 +20,8 @@ namespace Pico{
 
             echo();
             nodelay(stdscr, false);          /// Enables instant input
+
+            logging.Write("PICK_GAME=>Awaiting user input");
 
             int gamePicked=-1;
             int selection;
@@ -34,6 +39,8 @@ namespace Pico{
 
             noecho();
             nodelay(stdscr, true);          /// Enables instant input
+
+            logging.Write("POPULATE_DOWNLOADS_MAP=>User picked the game "+QString::number(gamePicked));
 
             return gamePicked;
         }

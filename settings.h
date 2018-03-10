@@ -21,6 +21,8 @@ namespace Pico{
             static std::string   PASSWORD;
             static std::string   HASHWORD;
             static std::string   LOG_PATH;
+            static std::string   GAME_PATH;
+            static std::string   FAF_PATH;
         };
 
         void InitializeSettings();
