@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
                         }
                         logging.Write("MAIN=>Preparing to join "+QString::number(gamePick));
 
-                        games.PopulateDownloadsMap(gamesMap[gamePick], downloadsMap);   /// Which files do we need to download for this game ?
+                        downloader.PopulateDownloadsMap(gamesMap[gamePick], downloadsMap);   /// Which files do we need to download for this game ?
                         downloader.DownloadFiles(downloadsMap);                         /// Updates downloadsMap state, download files one by one
                         float currentTime = ((float)std::clock())/CLOCKS_PER_SEC;
                         if  (currentTime - lastRefresh > refreshSpeed){

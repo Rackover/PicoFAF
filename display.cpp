@@ -13,6 +13,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QDebug>
+#include <QJsonObject>
 
 
 namespace Pico{

@@ -41,8 +41,8 @@ HEADERS += \
 
 
 #PDC
-INCLUDEPATH += C:\Qt\custom-libs\pdcurses
-LIBS += -L"C:\Qt\custom-libs\pdcurses\wincon\build" -lpdcurses
+INCLUDEPATH += D:\LOGICIELS\QT\custom-libs\pdcurses
+LIBS += -L"D:\LOGICIELS\QT\custom-libs\pdcurses\wincon\build" -lpdcurses
 #ENDOf
 
 

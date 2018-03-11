@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <sstream>
+#include <map>
+
 #include <QCryptographicHash>
 #include <QString>
 
@@ -46,6 +48,22 @@ namespace Pico{
                 text += " ";
             }
             return text;
+        }
+
+        inline std::string map_to_string(std::map<std::string, int>  &m) {
+            std::string output = "";
+            std::string convrt = "";
+            std::string result = "";
+
+            for (auto it = m.cbegin(); it != m.cend(); it++) {
+
+                convrt = std::to_string(it->second);
+                output += (it->first) + ":" + (convrt) + ", ";
+            }
+
+            result = output.substr(0, output.size() - 2 );
+
+          return result;
         }
     }
 }
