@@ -32,8 +32,8 @@ namespace Pico{
                     SLOT(OnSocketError(QAbstractSocket::SocketError)));
 
             qDebug() << connect(&socket,
-                    &socket.readyRead(),
-                    Funcs::OnReceivedData());
+                    SIGNAL(readyRead()),
+                    SLOT(OnReceivedData()));
 
             qDebug() << connect(&socket,
                     SIGNAL(disconnected()),
