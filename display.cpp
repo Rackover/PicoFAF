@@ -15,7 +15,6 @@
 #include <QDebug>
 #include <QJsonObject>
 
-
 namespace Pico{
     namespace Display{
 
@@ -223,8 +222,20 @@ namespace Pico{
             Display();
         }
 
-        void Funcs::DisplayDownloads(std::map<std::string, int> &downloadsMap){
+        void Funcs::DisplayDownloads(QVector<QNetworkReply *> currentDownloads){
 
+        }
+
+        ////////////////
+        /// SLOTS
+        ////////////////
+
+        void Funcs::OnStatusChange(QString newStatus){
+            status = newStatus.toStdString();
+            Display();
+        }
+        void Funcs::OnGameUpdate(std::map<int, QJsonObject> &gamesMap){
+            DisplayGameList(gamesMap);
         }
     }
 }

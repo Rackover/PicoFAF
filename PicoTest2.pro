@@ -18,7 +18,6 @@ SOURCES += main.cpp \
     authentification.cpp \
     games.cpp \
     logging.cpp \
-    reaction.cpp \
     serverlink.cpp \
     settings.cpp \
     display.cpp \
@@ -31,7 +30,6 @@ HEADERS += \
     authentification.h \
     games.h \
     logging.h \
-    reaction.h \
     serverlink.h \
     display.h \
     input.h \

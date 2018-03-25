@@ -34,10 +34,6 @@ namespace Pico{
                 Pico::Server::Funcs &server
                 ){
 
-            if (inputData == "PING"){
-                logging.Write("MAKE_RESPONSE => Pong-ing back.");
-                return "PONG";
-            }
 
             QString response = "";
 
@@ -46,60 +42,6 @@ namespace Pico{
             QJsonObject jsonObject = jsonDocument.object();
 
             QString command = jsonObject.value("command").toString();
-
-            switch (Pico::Utils::str2int(command.toStdString().data())){
-
-                ///WILL TRY TO LOG IN AUTOMATICALLY
-                case Pico::Utils::str2int("session"):
-                    {
-                        double sessionId =  jsonObject.value("session").toDouble();
-                        logging.Write("MAKE_RESPONSE => Generating UID...");
-                        QString sessionUid = Pico::Auth::GetUid(sessionId);
-
-                        if (sessionUid == "-1"){
-                            server.CloseConnection();
-                            logging.Write(QString::fromStdString("MAKE_RESPONSE => COULD NOT GENERATE UID. CLOSING CONNETION."));
-                            return "Could not generate UID.";
-                        }
-
-                        QJsonObject responseObject{
-                            {"command", "hello"},
-                            {"login", QString::fromStdString(FDC.LOGIN)},
-                            {"unique_id", sessionUid},
-                            {"session", sessionId},
-                            {"password", QString::fromStdString(FDC.HASHWORD)} };
-
-                        QJsonDocument responseDocument(responseObject);
-                        response = responseDocument.toJson();
-                        break;
-                    }
-                ////
-
-                case Pico::Utils::str2int("game_info"):
-                    {
-                        QString state = jsonObject.value("state").toString();
-
-                        if (state == "open"){
-                            int key = jsonObject.value("uid").toInt();
-                            gamesMap[key] = jsonObject;
-                        }
-                        else{
-                            int key = jsonObject.value("uid").toInt();
-                            gamesMap.erase(key);
-                        }
-                        break;
-                    }
-
-                case Pico::Utils::str2int("authentication_failed"):
-                    {
-                        std::string errorMsg = jsonObject.value("text").toString().toStdString();
-                        server.CloseConnection();
-                        logging.Write(QString::fromStdString("MAKE_RESPONSE => CLOSED CONNECTION WITH ERROR MESSAGE : " + errorMsg));
-                        return QString::fromStdString(errorMsg);
-                        break;
-                    }
-
-            }
             if (response.length() > 0){
                logging.Write(QString::fromStdString("MAKE_RESPONSE => ") + response);
             }

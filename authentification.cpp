@@ -24,8 +24,11 @@ namespace Pico{
             logging.Write("GET_UID => Looking for "+file);
 
             if (!Pico::Utils::file_exists(Pico::Settings::HC_CONFIG.UID_EXE_PATH)){
+                logging.Write("GET_UID => UID Generator couldn't be find. Exiting.");
                 return uid;
             }
+
+            logging.Write("GET_UID => Found it.");
 
             QString output;
             process->start(file);
@@ -33,6 +36,7 @@ namespace Pico{
 
             while (!process->waitForFinished(3000)){
                 if (process->error() < 5){
+                    logging.Write("GET_UID => Could not generate UID : "+process->errorString()+". Exiting.");
                     return uid;
                 }
             }

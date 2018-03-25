@@ -22,6 +22,7 @@ namespace Pico{
          std::string   FD_CONFIG::LOG_PATH =         "logs/";
          std::string   FD_CONFIG::GAME_PATH =        "X:/GAMES/SCFA/Supreme Commander - Forged Alliance";
          std::string   FD_CONFIG::FAF_PATH =         "X:/GAMES/SCFA/FAForever";
+         std::string   FD_CONFIG::CUSTOM_PATH =      "X:/Users/Player/Documents/My Games/Gas Powered Games/Supreme Commander - Forged Alliance";
 
 
         void InitializeSettings(){
@@ -50,7 +51,11 @@ namespace Pico{
                     continue;
                 }
 
-                std::vector<std::string> lineContents = Pico::Utils::explode(thisLine, ':');
+                std::vector<std::string> lineContents;
+
+                size_t pos = thisLine.find_first_of(":");
+                lineContents.push_back(thisLine.substr(0, pos));
+                lineContents.push_back(thisLine.substr(pos+1, thisLine.length()));
 
                 std::string settingName = lineContents.at(0);
                 std::string settingValue = "";
@@ -72,6 +77,7 @@ namespace Pico{
                         break;
                     }
                     case Pico::Utils::str2int("SERVER_PORT"):{
+
                         FD_CONFIG::SERVER_PORT = std::stoi(settingValue);
                         break;
                     }
@@ -104,6 +110,21 @@ namespace Pico{
                         FD_CONFIG::LOG_PATH = settingValue;
                         break;
                     }
+
+                    case Pico::Utils::str2int("GAME_PATH"):{
+                        FD_CONFIG::GAME_PATH = settingValue;
+                        break;
+                    }
+
+                    case Pico::Utils::str2int("FAF_PATH"):{
+                        FD_CONFIG::FAF_PATH = settingValue;
+                        break;
+                    }
+
+                    case Pico::Utils::str2int("CUSTOM_PATH"):{
+                        FD_CONFIG::CUSTOM_PATH = settingValue;
+                        break;
+                    }
                 }
                 if (readData){
                     logging.Write("INITIALIZE_CONFIG => SET "+QString::fromStdString(settingName)+" TO ["+QString::fromStdString(settingValue)+"]");
@@ -123,7 +144,7 @@ namespace Pico{
                 QTextStream stream(&newSettingsFile);
                 stream << QString::fromStdString(newSettings);
                 newSettingsFile.close();
-                logging.Write("From INITIALIZE_CONFIG => Successfully wrote to disk.");
+                logging.Write("INITIALIZE_CONFIG => Successfully wrote to disk.");
             }
         }
 

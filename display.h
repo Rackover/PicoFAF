@@ -5,6 +5,7 @@
 #include <panel.h>
 
 #include <QObject>
+#include <QNetworkReply>
 
 namespace Pico{
     namespace Display{
@@ -31,11 +32,13 @@ namespace Pico{
                 void Display();
                 void RefreshCommand(std::string command);
                 void DisplayGameList(std::map<int, QJsonObject> &gamesMap);
-                void DisplayDownloads(std::map<std::string, int> &downloadsMap);
+                void DisplayDownloads(QVector<QNetworkReply *> currentDownloads);
 
         signals:
 
         public slots:
+            void OnStatusChange(QString newStatus);
+            void OnGameUpdate(std::map<int, QJsonObject> &gamesMap);
 
         private:
 

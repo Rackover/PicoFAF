@@ -16,26 +16,25 @@ namespace Pico{
             Q_OBJECT
             public:
                 explicit Funcs(QObject *parent = 0);
-                void DownloadFiles(std::map<std::string, int> &downloadsMap);
-                void PopulateDownloadsMap(QJsonObject game, std::map<std::string, int> downloadsMap);
+                void DownloadIfMissing(QUrl &url, QString folder="mods");
+                void SynchronizeCustomData(QJsonObject game);
+                bool SaveFile(const QString &filename, QIODevice *data);
 
-                struct currentDownload{
-                    std::condition_variable    finished;
-                    int                     state;
-                    std::string              details;
-                    QString                   data;
-                    std::mutex               lock;
-                };
+                void FireRequest(const QUrl &url);
+                QString ParseReply(QIODevice *data);
+                bool IsHttpRedirect(QNetworkReply *reply);
+                QUrl GetUrlFromAPIResponse(QString apiJson);
 
+                QNetworkAccessManager networkManager;
+                QVector<QNetworkReply *> currentDownloads;
 
-        signals:
-            void onVaultResponse(QNetworkReply* reply);
+            signals:
 
-        signals:
+            public slots:
+                void OnRequestFinished(QNetworkReply *reply);
+                void SSLErrors(const QList<QSslError> &errors);
 
-        public slots:
-
-        private:
+            private:
 
         };
     }

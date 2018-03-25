@@ -23,6 +23,7 @@ namespace Pico{
             static std::string   LOG_PATH;
             static std::string   GAME_PATH;
             static std::string   FAF_PATH;
+            static std::string   CUSTOM_PATH;
         };
 
         void InitializeSettings();

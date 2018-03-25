@@ -6,3 +6,4 @@ HASHWORD:
 LOG_PATH:logs/
 GAME_PATH:X:\GAMES\SCFA\Supreme Commander - Forged Alliance
 FAF_PATH:X:\GAMES\SCFA\FAForever
+CUSTOM_PATH:X:\Users\Player\Documents\My Games\Gas Powered Games\Supreme Commander - Forged Alliance
