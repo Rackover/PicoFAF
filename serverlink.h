@@ -27,8 +27,8 @@ namespace Pico{
             QString IsolateMessage();
 
         signals:
-            void AddedGame(int id, QJsonObject game);
-            void DeletedGame(int id);
+            void AddGame(int id, QJsonObject game);
+            void DeleteGame(int id);
             void Connected();
             void Disconnected();
             void StatusChanged(QString status);

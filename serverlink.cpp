@@ -80,13 +80,10 @@ namespace Pico{
         }
 
         void Funcs::OnReceivedData(){
-
-            logging.Write("ON_RECEIVED_DATA => Triggered");
-
             QString msg = IsolateMessage();
 
             if (msg.length() > 0){
-                logging.Write(QString("ON_RECEIVED_DATA => Received non-empty message [") + QString::number(msg.length()) + QString("]: ") + msg);
+                //logging.Write(QString("ON_RECEIVED_DATA => Received non-empty message [") + QString::number(msg.length()) + QString("]: ") + msg);
             }
             else{
                 return;
@@ -114,10 +111,10 @@ namespace Pico{
                 int key = jsonMsg.value("uid").toInt();
 
                 if (state == "open"){
-                    emit AddedGame(key, jsonMsg);
+                    emit AddGame(key, jsonMsg);
                 }
                 else{
-                    emit DeletedGame(key);
+                    emit DeleteGame(key);
                 }
             }
 

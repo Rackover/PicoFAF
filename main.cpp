@@ -16,6 +16,15 @@
 class Mainframe : public QObject
 {
     Q_OBJECT
+
+private:
+    Pico::Server::Funcs *server;
+    Pico::Display::Funcs *display;
+    Pico::Input::Funcs *input;
+    Pico::Games::Funcs *games;
+    Pico::Downloader::Funcs *downloader;
+    Pico::Logging::Funcs *logging;
+
 public:
     Mainframe(QObject *parent = 0) : QObject(parent) {}
 
@@ -34,8 +43,8 @@ public slots:
 
         /// STARTUP
         // Log initialization
-        Pico::Logging::Funcs logging;
-        logging.InitializeLog();    // Renames the old log file and moves if necessary
+        logging = new Pico::Logging::Funcs();
+        logging->InitializeLog();    // Renames the old log file and moves if necessary
         // Endof
 
         // Updating the settings, calculating password hash...
@@ -43,12 +52,11 @@ public slots:
         // Endof
         /// END OF
 
-        Pico::Server::Funcs server;
-        Pico::Display::Funcs display;
-        Pico::Input::Funcs input;
-        Pico::Games::Funcs games;
-        Pico::Downloader::Funcs downloader;
-
+        server = new Pico::Server::Funcs();
+        display = new Pico::Display::Funcs();
+        input = new Pico::Input::Funcs();
+        games = new Pico::Games::Funcs();
+        downloader = new Pico::Downloader::Funcs();
 
         ///////////////
         ///
@@ -58,44 +66,44 @@ public slots:
 
         /// - Connecting server to display
         connect(
-                &server,
+                server,
                 SIGNAL(StatusChanged(QString)),
-                &display,
+                display,
                 SLOT(OnStatusChange(QString)));
 
         connect(
-                &games,
-                SIGNAL(GamesChanged(std::map<int, QJsonObject>)),
-                &display,
-                SLOT(OnGameUpdate(std::map<int, QJsonObject>)));
+                games,
+                SIGNAL(GamesChanged(std::map<int, QJsonObject>*)),
+                display,
+                SLOT(OnGameUpdate(std::map<int, QJsonObject>*)));
 
 
         /// - Connecting server games add and remove to <Games>
         connect(
-                &server,
+                server,
                 SIGNAL(AddGame(int, QJsonObject)),
-                &games,
+                games,
                 SLOT(OnGameAdd(int, QJsonObject)));
 
         connect(
-                &server,
+                server,
                 SIGNAL(DeleteGame(int)),
-                &games,
+                games,
                 SLOT(OnGameDelete(int)));
 
 
         /// - Connecting pressed ENTER to modeswitch - and other keypresses
         connect(
-                    &input,
+                    input,
                     SIGNAL(PressedEnter()),
                     this,
-                    SLOT(OnPressEnter()));
+                    SLOT(OnEnter()));
 
         connect(
-                    &input,
-                    SIGNAL(KeyPress()),
+                    input,
+                    SIGNAL(PressedChar(char)),
                     this,
-                    SLOT(OnKeyPress()));
+                    SLOT(OnChar(char)));
 
 
 
@@ -104,6 +112,12 @@ public slots:
 
 
         /// emit Finished();
+    }
+    void OnChar(char keyPressed){
+        logging->Write(QString(keyPressed));
+    }
+    void OnEnter(){
+        input->PickGame(&(games->gamesMap), display->windows[1]);
     }
 
 signals:

@@ -3,6 +3,7 @@
 
 #include <QJsonObject>
 
+#include <signal.h>
 #include <wincon/pdcwin.h>
 #include <map>
 
@@ -16,7 +17,7 @@ namespace Pico{
         {
         }
 
-        int Funcs::PickGame(std::map<int, QJsonObject> &gamesMap, WINDOW *window){
+        int Funcs::PickGame(std::map<int, QJsonObject> *gamesMap, WINDOW *window){
 
             echo();
             nodelay(stdscr, false);          /// Enables instant input
@@ -27,9 +28,9 @@ namespace Pico{
             int selection;
 
             wscanw(window, "%i", &selection);
-            if (selection < (int)gamesMap.size()+1){
+            if (selection < (int)gamesMap->size()+1){
                 int i = 0;
-                for (const auto& kv : gamesMap) {
+                for (const auto& kv : *gamesMap) {
                     i++;
                     if (i==selection){
                         gamePicked = kv.first;
@@ -40,9 +41,11 @@ namespace Pico{
             noecho();
             nodelay(stdscr, true);          /// Enables instant input
 
-            logging.Write("POPULATE_DOWNLOADS_MAP=>User picked the game "+QString::number(gamePicked));
+            logging.Write("PICK_GAME=>User picked the game "+QString::number(gamePicked));
 
             return gamePicked;
         }
+
+
     }
 }

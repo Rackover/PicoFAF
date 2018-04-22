@@ -2,6 +2,7 @@
 #include "games.h"
 #include "settings.h"
 #include "utils.h"
+#include "logging.h"
 
 #include <iostream>
 #include <sstream>
@@ -17,6 +18,8 @@
 
 namespace Pico{
     namespace Display{
+
+        Pico::Logging::Funcs logging;
 
         Funcs::Funcs(QObject* parent) :
             QObject(parent)
@@ -142,11 +145,11 @@ namespace Pico{
             wrefresh(windows[1]);
         }
 
-        void Funcs::DisplayGameList(std::map<int, QJsonObject>& gamesMap){
+        void Funcs::DisplayGameList(std::map<int, QJsonObject> *gamesMap){
 
             int i = 0;
 
-            std::map<int, QJsonObject> fakeMap(gamesMap);
+            std::map<int, QJsonObject> fakeMap(*gamesMap);
 
             int nameLength = 16;
             int playersLength = 7;
@@ -234,7 +237,7 @@ namespace Pico{
             status = newStatus.toStdString();
             Display();
         }
-        void Funcs::OnGameUpdate(std::map<int, QJsonObject> &gamesMap){
+        void Funcs::OnGameUpdate(std::map<int, QJsonObject> *gamesMap){
             DisplayGameList(gamesMap);
         }
     }

@@ -39,8 +39,8 @@ HEADERS += \
 
 
 #PDC
-INCLUDEPATH += D:\LOGICIELS\QT\custom-libs\pdcurses
-LIBS += -L"D:\LOGICIELS\QT\custom-libs\pdcurses\wincon\build" -lpdcurses
+INCLUDEPATH += R:\PROJECTS\QT\BUILD_PicoTest2\LIBRARIES\pdcurses
+LIBS += -L"R:\PROJECTS\QT\BUILD_PicoTest2\LIBRARIES\pdcurses\wincon\build" -lpdcurses
 #ENDOf
 
 

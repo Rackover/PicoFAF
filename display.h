@@ -31,14 +31,14 @@ namespace Pico{
                 std::string BoolToCheckbox(bool value);
                 void Display();
                 void RefreshCommand(std::string command);
-                void DisplayGameList(std::map<int, QJsonObject> &gamesMap);
+                void DisplayGameList(std::map<int, QJsonObject> *gamesMap);
                 void DisplayDownloads(QVector<QNetworkReply *> currentDownloads);
 
         signals:
 
         public slots:
             void OnStatusChange(QString newStatus);
-            void OnGameUpdate(std::map<int, QJsonObject> &gamesMap);
+            void OnGameUpdate(std::map<int, QJsonObject> *gamesMap);
 
         private:
 

@@ -20,7 +20,7 @@ namespace Pico{
             void OnGameDelete(int id);
 
         signals:
-            void GamesChanged(std::map<int, QJsonObject> &gamesMap);
+            void GamesChanged(std::map<int, QJsonObject> *gamesMap);
         };
     }
 }

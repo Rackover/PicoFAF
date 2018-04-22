@@ -14,12 +14,11 @@ namespace Pico{
             public:
                 explicit Funcs(QObject *parent = 0);
 
-                int PickGame(std::map<int, QJsonObject> &gamesMap, WINDOW *window);
-                int PressedKey();
-                char PressedChar();
-
+                int PickGame(std::map<int, QJsonObject> *gamesMap, WINDOW *window);
 
             signals:
+                void PressedEnter();
+                char PressedChar(char);
 
             public slots:
 
